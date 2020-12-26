@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 int main(){
-	int num = 0;
-	int prime = 0;
+	int num, prime = 0;
 	scanf("%d", &num);
 	
 	for (int i=2;i <= num/2; i++){
