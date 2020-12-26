@@ -1,2 +1,3 @@
-git bash window
+git bash
 tutorial test
+이건 뭐지
