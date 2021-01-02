@@ -7,6 +7,6 @@ for k in range(2, n):
         break
 
 if isPrime:
-    print(str(n),"is prime number!")
+    print(n,"is prime number!")
 else:
-    print(str(n),"is not prime number!")
+    print(n,"is not prime number!")
