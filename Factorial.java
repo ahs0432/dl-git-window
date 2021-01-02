@@ -1,5 +1,3 @@
-package kr.ac.daelim;
-
 import java.util.Scanner;
 
 public class Factorial {
