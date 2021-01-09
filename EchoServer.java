@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.ServerSocket; // 서버용 소켓
 import java.net.Socket; // 클라이언트용 소켓
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class EchoServer {
 	public static void main(String[] args) {
@@ -19,11 +21,30 @@ public class EchoServer {
 			PrintWriter out = new PrintWriter(cSckt.getOutputStream(), true);
 			){
 				String line;
-				
-				while((line = br.readLine()) != null) {
-					System.out.println("클라이언트로부터 받음 : " + line);
-					out.println(line);
-				}
+//				Modern Style Code
+//				순수 Lambda 함수 생성
+				Supplier<String> sInput = () -> {
+					try {
+						return br.readLine();
+					} catch (IOException e) {
+						return null;
+					}
+				};
+
+				Stream<String> stream = Stream.generate(sInput); // 스트림 객체 생성
+				stream.map(s -> {
+					System.out.println("클라이언트로부터 받음: " + s);
+					out.println(s); // 송신
+					return s;
+//				}).allMatch(s -> {return s != null}); // s!=null과 같지 않을 경우 지속 반복
+				}).allMatch(s -> s != null); // s!=null과 같지 않을 경우 지속 반복
+
+//				Old Style Code
+//				while((line = br.readLine()) != null) {
+//					System.out.println("클라이언트로부터 받음 : " + line);
+//					out.println(line);
+//				}
+
 			} catch(IOException e) {
 				e.printStackTrace();
 			}

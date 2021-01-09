@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.Socket; // 클라이언트용 소켓
 import java.net.InetAddress; // Get IP Address
 import java.util.Scanner;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class EchoClient {
 	public static void main(String[] args) {
@@ -17,21 +20,38 @@ public class EchoClient {
 			BufferedReader br = new BufferedReader(new InputStreamReader(cSckt.getInputStream()));
 			PrintWriter out = new PrintWriter(cSckt.getOutputStream(), true);
 			){
-	
 				System.out.println("서버 연결됨! ");
 				Scanner scv = new Scanner(System.in);
-	
-				while(true) {
-					System.out.print("메시지 입력 : ");
-					String line = scv.nextLine();
-	
-					if(line.equalsIgnoreCase("quit")){
-						break;
-					}
 
+				Supplier<String> sInput = () -> {
+					System.out.println("메세지 입력");
+					String line = scv.nextLine();
 					out.println(line);
-					System.out.println("서버 응답 : " + br.readLine());
-				}
+
+					try {
+						return br.readLine();
+					} catch (IOException e){
+						return null;
+					}
+				};
+
+				Stream<String> stream = Stream.generate(sInput);
+				stream.map(s -> {
+					System.out.println("서버 응답: " + s);
+					return s;
+				}).allMatch(s -> true);
+
+//				while(true) {
+//					System.out.print("메시지 입력 : ");
+//					String line = scv.nextLine();
+//
+//					if(line.equalsIgnoreCase("quit")){
+//						break;
+//					}
+//
+//					out.println(line);
+//					System.out.println("서버 응답 : " + br.readLine());
+//				}
 				scv.close();
 			} catch(IOException e) {
 				e.printStackTrace();
