@@ -39,7 +39,7 @@ public class EchoClient {
 				stream.map(s -> {
 					System.out.println("서버 응답: " + s);
 					return s;
-				}).allMatch(s -> s.equalsIgnoreCase("quit"));
+				}).allMatch(s -> !s.equalsIgnoreCase("quit"));
 
 //				while(true) {
 //					System.out.print("메시지 입력 : ");
