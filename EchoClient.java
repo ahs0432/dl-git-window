@@ -24,18 +24,18 @@ public class EchoClient {
 				Scanner scv = new Scanner(System.in);
 
 //			JDK 8 이후 가능한 모던 코드
-				Supplier<String> scvInput = () -> scv.nextLine();
-				System.out.println("메세지 입력");
-				Stream.generate(scvInput)
-						.map(s -> {
-							out.println(s);
-							try {
-								System.out.println("서버 응답 : " + br.readLine());
-							} catch (IOException e){
-							}
-							System.out.println("메세지 입력");
-							return s;
-						}).allMatch(s -> !s.equalsIgnoreCase("quit"));
+//				Supplier<String> scvInput = () -> scv.nextLine();
+//				System.out.println("메세지 입력");
+//				Stream.generate(scvInput)
+//						.map(s -> {
+//							out.println(s);
+//							try {
+//								System.out.println("서버 응답 : " + br.readLine());
+//							} catch (IOException e){
+//							}
+//							System.out.println("메세지 입력");
+//							return s;
+//						}).allMatch(s -> !s.equalsIgnoreCase("quit"));
 
 //				Supplier<String> sInput = () -> {
 //					System.out.println("메세지 입력");
@@ -62,17 +62,17 @@ public class EchoClient {
 //				});
 
 //				Traditional Implementation
-//				while(true) {
-//					System.out.print("메시지 입력 : ");
-//					String line = scv.nextLine();
-//
-//					if(line.equalsIgnoreCase("quit")){
-//						break;
-//					}
-//
-//					out.println(line);
-//					System.out.println("서버 응답 : " + br.readLine());
-//				}
+				while(true) {
+					System.out.print("메시지 입력 : ");
+					String line = scv.nextLine();
+
+					if(line.equalsIgnoreCase("quit")){
+						break;
+					}
+
+					out.println(line);
+					System.out.println("서버 응답 : " + br.readLine());
+				}
 				scv.close();
 			} catch(IOException e) {
 				e.printStackTrace();
