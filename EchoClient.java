@@ -23,24 +23,41 @@ public class EchoClient {
 				System.out.println("서버 연결됨! ");
 				Scanner scv = new Scanner(System.in);
 
-				Supplier<String> sInput = () -> {
-					System.out.println("메세지 입력");
-					String line = scv.nextLine();
-					out.println(line);
+				Supplier<String> scvInput = () -> scv.nextLine();
+				System.out.println("메세지 입력");
+				Stream.generate(scvInput)
+						.map(s -> {
+							out.println(s);
+							System.out.println("서버 응답 : " + s);
+							System.out.println("메세지 입력");
+							return s;
+						}).allMatch(s -> !s.equalsIgnoreCase("quit"));
 
-					try {
-						return br.readLine();
-					} catch (IOException e){
-						return null;
-					}
-				};
+//				Supplier<String> sInput = () -> {
+//					System.out.println("메세지 입력");
+//					String line = scv.nextLine();
+//					out.println(line);
+//
+//					try {
+//						return br.readLine();
+//					} catch (IOException e){
+//						return null;
+//					}
+//				};
+//
+//				Stream<String> stream = Stream.generate(sInput);
+//				stream.map(s -> {
+//					System.out.println("서버 응답: " + s);
+//					return s;
+//				}).allMatch(s -> {
+//					if(!s.equalsIgnoreCase("quit")){
+//						scv.close();
+//						return false;
+//					}
+//					return true;
+//				});
 
-				Stream<String> stream = Stream.generate(sInput);
-				stream.map(s -> {
-					System.out.println("서버 응답: " + s);
-					return s;
-				}).allMatch(s -> !s.equalsIgnoreCase("quit"));
-
+//				Traditional Implementation
 //				while(true) {
 //					System.out.print("메시지 입력 : ");
 //					String line = scv.nextLine();
