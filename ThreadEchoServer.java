@@ -41,7 +41,7 @@ public class ThreadEchoServer implements Runnable {
 				System.out.println(Thread.currentThread().getName() + "클라이언트로부터 받음 : " + line);
 				out.println(line);
 			}
-
+			System.out.println(Thread.currentThread().getName() + "가 퇴장했습니다.");
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
