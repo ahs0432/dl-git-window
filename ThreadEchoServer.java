@@ -38,7 +38,7 @@ public class ThreadEchoServer implements Runnable {
 		){
 			String line;
 			while((line = br.readLine()) != null) {
-				System.out.println("클라이언트로부터 받음 : " + line);
+				System.out.println(Thread.currentThread().getName() + "클라이언트로부터 받음 : " + line);
 				out.println(line);
 			}
 
