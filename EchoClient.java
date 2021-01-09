@@ -23,12 +23,16 @@ public class EchoClient {
 				System.out.println("서버 연결됨! ");
 				Scanner scv = new Scanner(System.in);
 
+//			JDK 8 이후 가능한 모던 코드
 				Supplier<String> scvInput = () -> scv.nextLine();
 				System.out.println("메세지 입력");
 				Stream.generate(scvInput)
 						.map(s -> {
 							out.println(s);
-							System.out.println("서버 응답 : " + s);
+							try {
+								System.out.println("서버 응답 : " + br.readLine());
+							} catch (IOException e){
+							}
 							System.out.println("메세지 입력");
 							return s;
 						}).allMatch(s -> !s.equalsIgnoreCase("quit"));
